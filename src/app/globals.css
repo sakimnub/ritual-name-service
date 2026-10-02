@@ -1,0 +1,202 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-display: 'Archivo Black', system-ui, sans-serif;
+  --font-body: 'Barlow', 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #000000;
+  color: #D1D5DB;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #374151;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #19D184;
+}
+
+/* Selection */
+::selection {
+  background: rgba(25, 209, 132, 0.25);
+  color: #BFFF00;
+}
+
+/* Gradient dividers */
+@layer components {
+  .divider-ritual {
+    @apply h-px bg-gradient-to-r from-ritual-green/30 via-gray-800 to-transparent;
+  }
+
+  .divider-ritual-pink {
+    @apply h-px bg-gradient-to-r from-ritual-pink/30 via-gray-800 to-transparent;
+  }
+
+  /* Card glass effect */
+  .card-ritual {
+    @apply bg-ritual-elevated border border-gray-800 rounded-xl shadow-card relative overflow-hidden;
+  }
+
+  .card-ritual::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(25, 209, 132, 0.3), transparent);
+  }
+
+  /* Glow button base */
+  .btn-ritual {
+    @apply border border-ritual-green text-ritual-green px-5 py-2.5 rounded-lg font-semibold text-sm
+           transition-all duration-300 ease-out
+           hover:bg-ritual-green/10 hover:shadow-glow-green
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ritual-green/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:shadow-none;
+  }
+
+  .btn-ritual-pink {
+    @apply border border-ritual-pink text-ritual-pink px-5 py-2.5 rounded-lg font-semibold text-sm
+           transition-all duration-300 ease-out
+           hover:bg-ritual-pink/10 hover:shadow-glow-pink
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ritual-pink/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ritual-gold {
+    @apply border border-dashed border-ritual-gold text-ritual-gold px-5 py-2.5 rounded-lg font-semibold text-sm
+           transition-all duration-300 ease-out
+           hover:bg-ritual-gold/10 hover:shadow-glow-gold
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ritual-gold/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ritual-ghost {
+    @apply border border-gray-700 text-gray-400 px-5 py-2.5 rounded-lg font-semibold text-sm
+           transition-all duration-300 ease-out
+           hover:border-gray-600 hover:text-gray-300
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-500/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black
+           disabled:opacity-40 disabled:cursor-not-allowed;
+  }
+
+  .btn-ritual-danger {
+    @apply border border-red-500/50 text-red-400 px-5 py-2.5 rounded-lg font-semibold text-sm
+           transition-all duration-300 ease-out
+           hover:bg-red-500/10
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-red-500/50
+           focus-visible:ring-offset-2 focus-visible:ring-offset-black;
+  }
+
+  /* Input fields */
+  .input-ritual {
+    @apply bg-ritual-surface border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300
+           placeholder:text-gray-600
+           transition-all duration-200
+           focus:outline-none focus:border-ritual-green/50 focus:ring-1 focus:ring-ritual-green/20
+           disabled:opacity-50 disabled:cursor-not-allowed;
+    font-family: var(--font-body);
+  }
+
+  /* Data labels */
+  .label-ritual {
+    @apply text-xs text-gray-500 uppercase tracking-wider font-medium;
+  }
+
+  /* Hex address */
+  .hex-address {
+    @apply font-mono text-xs text-gray-500;
+  }
+}
+
+/* Mesh gradient background for hero */
+.bg-hero-mesh {
+  background:
+    radial-gradient(ellipse at 30% 0%, rgba(25, 209, 132, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 100%, rgba(255, 29, 206, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(191, 255, 0, 0.04) 0%, transparent 70%);
+}
+
+/* Animated gradient border */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+.gradient-border {
+  --angle: 0deg;
+  border: 1px solid transparent;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  background-image:
+    linear-gradient(#111827, #111827),
+    conic-gradient(from var(--angle), #19D184, #FF1DCE, #BFFF00, #19D184);
+  animation: rotateBorder 4s linear infinite;
+}
+
+@keyframes rotateBorder {
+  to { --angle: 360deg; }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
